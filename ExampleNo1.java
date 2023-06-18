@@ -1,16 +1,30 @@
+package org.example;
+
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.Scanner;
-    public class ExampleNo1 {
+
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Введите строку: ");
-        String s = scanner.nextLine().trim();
-        String[] words = s.split("\\s+");
-        StringBuilder reversed = new StringBuilder();
-        for (int i = words.length - 1; i >= 0; i--) {
-            reversed.append(words[i]).append(" ");
+        int n = scanner.nextInt();
+        LinkedList<Integer> linkedList = createdList(n);
+        System.out.println("linkedList = " + linkedList);
+            for (int i = 0; i < linkedList.size() / 2; i++) {
+                int temp = linkedList.get(i);
+                linkedList.set(i,linkedList.get(linkedList.size() - 1 - i));
+                linkedList.set(linkedList.size() - 1 - i, temp);
+            }
+            for (int num : linkedList) {
+                System.out.print(num + " ");
+            }
+    }
+    private static LinkedList<Integer> createdList(int n){
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        Random random = new Random();
+        for (int i = 0; i < n; i++) {
+            linkedList.add(random.nextInt(10));
         }
-        System.out.println(reversed.toString().trim());
+        return linkedList;
     }
 }
-
-

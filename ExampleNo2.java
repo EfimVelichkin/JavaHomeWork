@@ -1,17 +1,28 @@
-import java.util.Scanner;
+package org.example;
 
+import java.util.Stack;
 
-public class ExampleNo2 {
+public class List {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите числа:");
-        String[] nums = scanner.nextLine().split(" ");
-        int sum = 0;
-        for (int i = 0; i < nums.length - 1; i++) {
-            if (Integer.parseInt(nums[i]) > 0 && Integer.parseInt(nums[i+1]) < 0) {
-                sum += Integer.parseInt(nums[i]);
+        String s = "({[]})";
+        System.out.println(isValid(s)); // Вывод: true
+    }
+
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else if (c == ')' && !stack.isEmpty() && stack.peek() == '(') {
+                stack.pop();
+            } else if (c == '}' && !stack.isEmpty() && stack.peek() == '{') {
+                stack.pop();
+            } else if (c == ']' && !stack.isEmpty() && stack.peek() == '[') {
+                stack.pop();
+            } else {
+                return false;
             }
         }
-        System.out.println(sum);
+        return stack.isEmpty();
     }
 }
