@@ -1,28 +1,32 @@
 package org.example;
 
-import java.util.Stack;
+import java.util.HashMap;
+import java.util.*;
+import java.util.Map;
 
-public class List {
+public class ExampleNo3 {
     public static void main(String[] args) {
-        String s = "({[]})";
-        System.out.println(isValid(s)); // Вывод: true
-    }
+        List<String> employees = Arrays.asList(
+                "Иван Иванов", "Светлана Петрова", "Кристина Белова", "Анна Мусина",
+                "Анна Крутова", "Иван Юрин", "Петр Лыков", "Павел Чернов",
+                "Петр Чернышов", "Мария Федорова", "Марина Светлова", "Мария Савина",
+                "Мария Рыкова", "Марина Лугова", "Анна Владимирова", "Иван Мечников",
+                "Петр Петин", "Иван Ежов"
+        );
 
-    public static boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
-        for (char c : s.toCharArray()) {
-            if (c == '(' || c == '{' || c == '[') {
-                stack.push(c);
-            } else if (c == ')' && !stack.isEmpty() && stack.peek() == '(') {
-                stack.pop();
-            } else if (c == '}' && !stack.isEmpty() && stack.peek() == '{') {
-                stack.pop();
-            } else if (c == ']' && !stack.isEmpty() && stack.peek() == '[') {
-                stack.pop();
-            } else {
-                return false;
+        Map<String, Integer> nameCount = new HashMap<>();
+        for (String employee : employees) {
+            String name = employee.split(" ")[0];
+            nameCount.put(name, nameCount.getOrDefault(name, 0) + 1);
+        }
+
+        List<Map.Entry<String, Integer>> sortedNames = new ArrayList<>(nameCount.entrySet());
+        sortedNames.sort(Map.Entry.<String, Integer>comparingByValue().reversed());
+
+        for (Map.Entry<String, Integer> entry : sortedNames) {
+            if (entry.getValue() > 1) {
+                System.out.println(entry.getKey() + " - " + entry.getValue());
             }
         }
-        return stack.isEmpty();
     }
 }
